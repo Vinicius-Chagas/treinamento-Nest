@@ -6,12 +6,16 @@ import { ConfigModule } from '@nestjs/config';
 import typeorm from './config/typeorm/data-source';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
-import LogsMiddleware from './middleware/logs.middleware';
 import { DatabaseModule } from './database/database.module';
+import { LoggerMiddleware } from './middleware/logs.middleware';
+import { TransformInterceptor } from './common/interceptors/Transform.interceptor';
+import { ExampleFilter } from './common/exceptions/http-exception-filter';
+import { ExamplePipe } from './common/pipes/examplepipe.pipe';
+import { ExampleInterceptor } from './common/interceptors/Example.interceptor';
 
 @Module({
   imports: [
-        ConfigModule, 
+    ConfigModule,
     MulterModule.register({
       dest: '../uploads',
       limits: { fileSize: 10 * 1048576 }, // 10MB
@@ -25,10 +29,10 @@ import { DatabaseModule } from './database/database.module';
     DatabaseModule
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TransformInterceptor, ExampleFilter, ExamplePipe, ExampleInterceptor],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(LogsMiddleware).forRoutes('*');
+    consumer.apply(LoggerMiddleware).forRoutes('*');
   }
 }
