@@ -7,7 +7,6 @@ import { UsersModule } from '../users/users.module'
 import { JwtStrategy } from './strategy/jwt.strategy'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { ForgotPassword } from './entities/forgot-password.entity'
-
 @Module({
   imports: [
     TypeOrmModule.forFeature([ForgotPassword]),
@@ -19,7 +18,7 @@ import { ForgotPassword } from './entities/forgot-password.entity'
         signOptions: { expiresIn: `${process.env.JWT_SECONDS_EXPIRE}s` },
       }),
     }),
-    UsersModule,
+    UsersModule
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

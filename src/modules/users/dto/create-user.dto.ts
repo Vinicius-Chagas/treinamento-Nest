@@ -9,14 +9,14 @@ export class CreateUserDto {
   @IsNotEmpty({
     message: 'Informe o nome do usuário',
   })
-  name: string
+  name!: string
 
   @ApiProperty()
   @IsEmail()
   @IsNotEmpty({
     message: 'Informe o e-mail do usuário',
   })
-  email: string
+  email!: string
 
   @ApiProperty()
   @IsString()
@@ -24,28 +24,28 @@ export class CreateUserDto {
     message: 'Informe o CPF do usuário',
   })
   @Length(11, 11)
-  @Transform(({ value }) => value.replace(/\D/g, ''))
-  cpf: string
+  @Transform(({ value }) => value?.replace(/\D/g, ''))
+  cpf!: string
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty({
     message: 'Informe o telefone do usuário',
   })
-  @Transform(({ value }) => value.replace(/\D/g, ''))
-  telephone: string
+  @Transform(({ value }) => value?.replace(/\D/g, ''))
+  telephone!: string
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty({
     message: 'Informe a senha do usuário',
   })
-  password: string
+  password!: string
 
   @ApiProperty()
   @IsEnum(Roles)
   @IsNotEmpty({
     message: 'Informe o papel do usuário',
   })
-  role: Roles
+  role!: Roles
 }

@@ -1,3 +1,4 @@
+import { NomeService } from './modules/users/nome.service';
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -8,10 +9,6 @@ import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { LoggerMiddleware } from './middleware/logs.middleware';
-import { TransformInterceptor } from './common/interceptors/Transform.interceptor';
-import { ExampleFilter } from './common/exceptions/http-exception-filter';
-import { ExamplePipe } from './common/pipes/examplepipe.pipe';
-import { ExampleInterceptor } from './common/interceptors/Example.interceptor';
 
 @Module({
   imports: [
@@ -26,10 +23,11 @@ import { ExampleInterceptor } from './common/interceptors/Example.interceptor';
     }),
     UsersModule,
     AuthModule,
-    DatabaseModule
+    DatabaseModule,
   ],
   controllers: [AppController],
-  providers: [AppService, TransformInterceptor, ExampleFilter, ExamplePipe, ExampleInterceptor],
+  providers: [
+     AppService],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

@@ -10,7 +10,6 @@ import { User } from '../../entities/user.entity'
 export class UsersRepository extends Repository<User>{
   constructor(
     dataSource: DataSource,
-    
   ) {
     super(User, dataSource.createEntityManager())
   }
@@ -23,17 +22,19 @@ export class UsersRepository extends Repository<User>{
 
   async _findAll(
     { page, limit, search, active }: PaginateParams,
-    userId: number,
   ) {
     const queryBuilder = this.createQueryBuilder('Users')
       .select([
         'Users.id',
+        'Users.createdAt',
+        'Users.updatedAt',
         'Users.name',
         'Users.email',
         'Users.cpf',
+        'Users.telephone',
         'Users.active',
+        'Users.role',
       ])
-      .where('Users.id != :userId', { userId })
       .orderBy('Users.name', 'ASC')
 
     if (search) {
@@ -62,6 +63,10 @@ export class UsersRepository extends Repository<User>{
   }
 
   async _findUserByCpf(cpf: string): Promise<{ user: User | null }> {
+    if (!cpf) {
+      return { user: null }
+    }
+
     const user = await this.findOne({
       where: {
         cpf,

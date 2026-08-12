@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable n/no-path-concat */
 import * as path from 'path'
 import { DataSource, DataSourceOptions } from 'typeorm'
 import * as dotenv from 'dotenv';

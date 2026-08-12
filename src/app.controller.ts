@@ -3,6 +3,7 @@ import { AppService } from './app.service';
 import { TransformInterceptor } from './common/interceptors/Transform.interceptor';
 import { ExamplePipe } from './common/pipes/examplepipe.pipe';
 import { ExampleFilter } from './common/exceptions/http-exception-filter';
+import { ExampleInterceptor } from './common/interceptors/Example.interceptor';
 
 @Controller()
 export class AppController {
@@ -14,10 +15,10 @@ export class AppController {
   }
 
   @Get('interceptor')
-  @UseInterceptors(TransformInterceptor)
+  @UseInterceptors(ExampleInterceptor)
   testInterceptor() {
-    console.log('Gerenciador de request')
-    return { message: 'Dados originais' };
+    console.log('Gerenciador de request');
+    return { message: 'Hello World!' };
   }
 
   @Post('pipe')

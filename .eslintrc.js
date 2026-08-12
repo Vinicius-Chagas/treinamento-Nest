@@ -5,11 +5,9 @@ module.exports = {
     tsconfigRootDir: __dirname,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint/eslint-plugin'],
+  plugins: ['@typescript-eslint'],
   extends: [
-    '@rocketseat/eslint-config/node',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
   ],
   root: true,
   env: {
@@ -18,21 +16,11 @@ module.exports = {
   },
   ignorePatterns: ['.eslintrc.js'],
   rules: {
-    '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
-    "no-useless-constructor": "off",
-    "no-use-before-define": "off",
-    'endOfLine': 'auto'
+    '@typescript-eslint/no-unused-vars': 'off',
+    'no-useless-constructor': 'off',
+    'no-use-before-define': 'off',
   },
-  overrides: [
-    {
-      files: ["test/**/*"],
-      plugins: ["jest"],
-      env: {
-        "jest/globals": true
-      }
-    }
-  ]
 };

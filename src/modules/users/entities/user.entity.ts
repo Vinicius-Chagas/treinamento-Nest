@@ -1,6 +1,9 @@
-import { Column, Entity } from 'typeorm'
-import { Roles } from '../enums'
-import { AbstractEntity } from '../../../database/typeorm/abstract.entity'
+import { Column, Entity } from 'typeorm';
+import { Roles } from '../enums';
+import { AbstractEntity } from '../../../database/typeorm/abstract.entity';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsBoolean, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 @Entity({
   name: 'users',
@@ -10,14 +13,21 @@ export class User extends AbstractEntity<User> {
     type: 'varchar',
     nullable: false,
   })
-  name: string
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty({
+    message: 'Informe o nome do usuário',
+  })
+  name: string;
 
   @Column({
     type: 'varchar',
     unique: true,
     nullable: false,
   })
-  email: string
+  @IsEmail()
+  @Transform(({ value }) => value.toLowerCase())
+  email: string;
 
   @Column({
     type: 'varchar',
@@ -25,28 +35,31 @@ export class User extends AbstractEntity<User> {
     nullable: false,
     length: 11,
   })
-  cpf: string
+  cpf: string;
 
   @Column({
     type: 'varchar',
     nullable: false,
   })
-  telephone: string
+  @IsString()
+  @IsNotEmpty()
+  telephone: string;
 
   @Column({
     type: 'varchar',
     nullable: false,
     select: false,
   })
-  password: string
+  password: string;
 
   @Column({
     type: 'boolean',
     nullable: false,
     default: true,
   })
-  active: boolean
+  @IsBoolean()
+  active: boolean;
 
-  @Column({type: 'enum', enum: Roles,default: Roles.USER})
-  role: Roles
+  @Column({ type: 'enum', enum: Roles, default: Roles.USER })
+  role: Roles;
 }
